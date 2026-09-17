@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Yuki! 🎉</title>
+<style>
+  :root{
+    --bg1:#ff9a9e;
+    --bg2:#fecfef;
+    --bg3:#a18cd1;
+    --card-bg: rgba(255,255,255,0.85);
+    --text: #4a2a5a;
+    --accent: #ff5da2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --card-bg: rgba(30,20,40,0.75);
+      --text: #ffe3f2;
+    }
+  }
+  :root[data-theme="dark"]{
+    --card-bg: rgba(30,20,40,0.75);
+    --text: #ffe3f2;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0; height:100%; width:100%;
+    overflow-x:hidden;
+    font-family: 'Segoe UI', Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+    background-size: 300% 300%;
+    animation: gradientShift 12s ease infinite;
+    color: var(--text);
+  }
+  @keyframes gradientShift{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
+
+  .container{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 24px;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+
+  .card{
+    background: var(--card-bg);
+    backdrop-filter: blur(6px);
+    border-radius: 28px;
+    padding: 40px 32px;
+    max-width: 560px;
+    width:100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: popIn 1s ease;
+  }
+  @keyframes popIn{
+    0%{ transform: scale(0.7); opacity:0; }
+    100%{ transform: scale(1); opacity:1; }
+  }
+
+  h1{
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    margin: 0 0 10px;
+    background: linear-gradient(90deg,#ff5da2,#ffb347,#a18cd1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: wiggle 2.5s ease-in-out infinite;
+  }
+  @keyframes wiggle{
+    0%,100%{ transform: rotate(-2deg); }
+    50%{ transform: rotate(2deg); }
+  }
+
+  .name{
+    font-size: clamp(2.2rem, 8vw, 3.8rem);
+    font-weight: 800;
+    margin: 6px 0 18px;
+    color: var(--accent);
+    text-shadow: 2px 2px 0 rgba(255,255,255,0.4);
+  }
+
+  p.msg{
+    font-size: 1.15rem;
+    line-height:1.6;
+    margin: 0 0 26px;
+  }
+
+  .cake{
+    font-size: 4rem;
+    margin: 10px 0;
+    display:inline-block;
+    animation: bounce 1.6s ease-in-out infinite;
+    cursor:pointer;
+    user-select:none;
+  }
+  @keyframes bounce{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-14px); }
+  }
+
+  .balloons{
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    pointer-events:none;
+    z-index:1;
+    overflow:hidden;
+  }
+  .balloon{
+    position:absolute;
+    bottom:-120px;
+    width:50px;
+    height:65px;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    opacity:0.85;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .balloon::after{
+    content:"";
+    position:absolute;
+    bottom:-18px;
+    left:50%;
+    width:1px;
+    height:18px;
+    background: rgba(0,0,0,0.25);
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); }
+    50%{ transform: translateY(-55vh) translateX(20px) rotate(6deg); }
+    100%{ transform: translateY(-115vh) translateX(-10px) rotate(-4deg); }
+  }
+
+  .btn{
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow: 0 8px 20px rgba(255,93,162,0.4);
+    transition: transform 0.15s ease;
+  }
+  .btn:active{ transform: scale(0.95); }
+
+  .confetti-piece{
+    position: fixed;
+    top: -10px;
+    z-index: 3;
+    pointer-events:none;
+    opacity: 0.95;
+  }
+
+  footer{
+    margin-top: 26px;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  .long-msg{
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    text-align: left;
+    margin-top: 0;
+    transition: max-height 0.8s ease, opacity 0.6s ease, margin-top 0.6s ease;
+  }
+  .long-msg.show{
+    max-height: 1200px;
+    opacity: 1;
+    margin-top: 24px;
+  }
+  .long-msg p{
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 0 0 14px;
+  }
+</style>
+</head>
+<body data-theme="">
+
+<div class="balloons" id="balloons"></div>
+
+<div class="container">
+  <div class="card">
+    <h1>🎂 Happy Birthday 🎂</h1>
+    <div class="name">Yuki!</div>
+    <p class="msg">
+      Wishing you a day filled with laughter, love, and all your favorite things.
+      Here's to another year of amazing memories and adventures ahead. 🎉✨
+    </p>
+    <div class="cake" id="cake" title="Click me!">🎂</div>
+    <br><br>
+    <button class="btn" id="confettiBtn">🎊 Celebrate!</button>
+
+    <div class="long-msg" id="longMsg">
+      <p>Dear Yuki,</p>
+      <p>
+        Another year has gone by, and somehow you keep getting more amazing.
+        I just wanted to take a moment today to tell you how much you mean
+        to me and how grateful I am to have you in my life.
+      </p>
+      <p>
+        You have this incredible way of making everyone around you feel
+        seen, heard, and appreciated. Whether it's your kindness, your
+        humor, or just the way you show up for the people you care about,
+        you make the world a little brighter simply by being in it.
+      </p>
+      <p>
+        I hope this next year brings you everything you've been hoping
+        for — new adventures, exciting opportunities, quiet moments of
+        peace, and plenty of joy. May you laugh often, love deeply, and
+        never stop chasing the things that make your heart feel full.
+      </p>
+      <p>
+        Thank you for being such a wonderful friend. Here's to celebrating
+        you today, and to many more birthdays to come. 🎉🎂✨
+      </p>
+      <p style="text-align:right; font-weight:600;">Your friend 💖</p>
+    </div>
+
+    <footer>Made with 💖 just for you</footer>
+  </div>
+</div>
+
+<script>
+  // Floating balloons
+  const balloonColors = ['#ff5da2','#ffb347','#a18cd1','#7ee8fa','#ffdd59','#ff6b6b','#7bed9f'];
+  const balloonContainer = document.getElementById('balloons');
+  const balloonCount = 12;
+
+  for(let i=0;i<balloonCount;i++){
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    b.style.left = Math.random()*100 + 'vw';
+    b.style.background = balloonColors[Math.floor(Math.random()*balloonColors.length)];
+    const duration = 8 + Math.random()*10;
+    b.style.animationDuration = duration + 's';
+    b.style.animationDelay = (Math.random()*duration) + 's';
+    balloonContainer.appendChild(b);
+  }
+
+  // Confetti burst
+  function burstConfetti(count){
+    const colors = balloonColors;
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const size = 6 + Math.random()*6;
+      piece.style.width = size+'px';
+      piece.style.height = (size*0.4)+'px';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+      document.body.appendChild(piece);
+
+      const fallDuration = 2500 + Math.random()*2000;
+      const xDrift = (Math.random()-0.5)*200;
+
+      piece.animate([
+        { transform: piece.style.transform + ' translate(0px, 0px)', opacity: 1 },
+        { transform: 'translate(' + xDrift + 'px, 100vh) rotate(' + (Math.random()*720-360) + 'deg)', opacity: 0.9 }
+      ], {
+        duration: fallDuration,
+        easing: 'cubic-bezier(.25,.46,.45,.94)'
+      });
+
+      setTimeout(()=> piece.remove(), fallDuration + 100);
+    }
+  }
+
+  document.getElementById('confettiBtn').addEventListener('click', ()=> {
+    burstConfetti(60);
+    document.getElementById('longMsg').classList.add('show');
+  });
+  document.getElementById('cake').addEventListener('click', ()=> burstConfetti(40));
+
+  // Auto burst on load
+  window.addEventListener('load', ()=> setTimeout(()=> burstConfetti(80), 400));
+</script>
+
+</body>
+</html>
